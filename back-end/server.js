@@ -5,15 +5,28 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+// Habilitar CORS (Cross-Origin Requests)
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  next();
+});
+
+
 // Sequelize es en ORM Framework para Bases de Datos relaciones (permite manipular las tablas de una base de datos como objetos en la aplicación)
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('fullstack-blur-admin', 'root', ''); // database, user, password
-
-
+var myDatabase = new Sequelize('fullstack-blur-admin', 'root', ''); // database, user, password
 
 // Crear Modelos (Tablas) y rutas (endpoints)
-require('./models/usuario')(app, sequelize);
+require('./models/usuario')(app, myDatabase);
 
+
+
+
+// Proveer los archivos del front-end CUANDO SE HALLAN COMPILADO
+app.use('/', express.static(__dirname + '/../front-end/release'));
 
 
 // Iniciar el servidor

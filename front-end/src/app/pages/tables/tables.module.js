@@ -35,6 +35,13 @@
           sidebarMeta: {
             order: 100,
           },
+        }).state('tables.usuarios', {
+          url: '/usuarios',
+          templateUrl: 'app/pages/tables/usuarios/table.html',
+          title: 'Usuarios',
+          sidebarMeta: {
+            order: 100,
+          },
         });
     $urlRouterProvider.when('/tables','/tables/basic');
   }

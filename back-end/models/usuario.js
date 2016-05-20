@@ -1,9 +1,10 @@
 var Sequelize = require('sequelize');
-module.exports = function(app, sequelize) {
+
+module.exports = function(app, myDatabase) {
 
 	// Crear un modelo (cada tabla de la base de datos es representada por un modelo)
 	// Aquí creamos el modelo 'Usuario', que va a representar la tabla 'usuario' en la bd
-	var Usuario = sequelize.define('usuario', {
+	var Usuario = myDatabase.define('usuario', {
 	  nombreUsuario: Sequelize.STRING,
 	  edad: Sequelize.INTEGER
 	});
@@ -30,14 +31,30 @@ module.exports = function(app, sequelize) {
 		console.log('==== POST /api/usuarios ====');
 		console.log(req.body);
 
-		sequelize.sync()
+		myDatabase.sync()
 			.then(function() {
 				Usuario.create(req.body); 
 			})
 			.then(function(usuarioCreado) {
 				res.status(200).json(usuarioCreado);
 			});
+	});
 
+	app.delete('/api/usuarios/:id', function(req, res) {
+		console.log('==== DELETE /api/usuarios ====');
+		var id = req.params.id;
+		Usuario.destroy({
+			where: {
+				id: id
+			}
+		}).then(function(count) {
+			console.log(count);
+			if(count > 0) {
+				return res.status(200).json({"message": "usuario borrado correctamente"});
+			} else {
+				return res.status(404).json({"error": "Id not found!"});
+			}
+		});
 	});
 
 };

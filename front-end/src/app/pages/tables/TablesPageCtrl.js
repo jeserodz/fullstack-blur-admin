@@ -9,7 +9,52 @@
       .controller('TablesPageCtrl', TablesPageCtrl);
 
   /** @ngInject */
-  function TablesPageCtrl($scope, $filter, editableOptions, editableThemes) {
+  function TablesPageCtrl($scope, $http, $filter, toastr, editableOptions, editableThemes) {
+
+    // Codigo ejemplo fullstack con NodeJS =================================================================
+    var leerUsuarios = function() {
+      $http.get('http://localhost:4000/api/usuarios').then(
+        function lecturaExisosa(response) {
+          $scope.usuarios = response.data;        }, 
+        function lecturaFallida(error) {
+          console.log(error);
+          toastr.error("Error al obtener usuarios del servidor");
+        });
+    };
+
+    leerUsuarios();
+    
+
+    $scope.nuevoUsuario = {};
+
+    $scope.agregarUsuario = function() {
+      $http.post('http://localhost:4000/api/usuarios', $scope.nuevoUsuario).then(
+        function insertadoExitoso(response) {
+          toastr.success("Usuario insertado correctamente");
+          leerUsuarios();
+        },
+        function insertadoFallido(error) {
+          toastr.error("Error al obtener usuarios del servidor");
+          console.log(error);
+        });
+    };
+
+    $scope.borrarUsuario = function(id) {
+      $http.delete('http://localhost:4000/api/usuarios/' + id).then(
+        function borradoExitoso(response) {
+          toastr.success('Borrado existoso');
+          leerUsuarios();
+        },
+        function borradoFallido(error) {
+          toastr.error('Error al borrar usuario');
+          console.log(error);
+        });
+
+    };
+
+
+
+    // Codigo original de ejemplo Blur Admin  =================================================================
 
     $scope.smartTablePageSize = 10;
 
