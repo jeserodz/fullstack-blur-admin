@@ -1,0 +1,18 @@
+{
+  "name": "fullstack-blur-admin",
+  "version": "1.0.0",
+  "description": "Ejemplo de aplicación full-stack con Node.js (Express, Sequelize, MySQL) en el back-end y Blur-Admin en el front-end.",
+  "main": "./back-end/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Jesé Rodríguez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "mysql": "^2.10.2",
+    "sequelize": "^3.23.2"
+  }
+}
