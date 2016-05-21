@@ -10,6 +10,8 @@ module.exports = function(app, myDatabase) {
 	});
 	// Para ver todos los tipos de datos que se pueden usar en un modelo, consulte la referencia: http://docs.sequelizejs.com/en/latest/docs/models-definition/#data-types
 	
+	// Syncronizar DB: esta función verifica si este modelo necesita una tabla en la DB.
+	myDatabase.sync();
 
 	// RUTAS DEL REST API PARA ESTE MODELO
 	app.get('/api/usuarios', function(req, res) {
